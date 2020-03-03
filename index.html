@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Song's Page</title>
+		<link href="files/css/bootstrap.css" rel="stylesheet">
+		<link href="files/css/hopscotch.css" rel="stylesheet">
+		<link href="files/css/main.css" rel="stylesheet">
+		<script src="files/js/jquery.min.js"></script>
+		<script src="files/js/marked.js"></script>
+		<script src="files/js/highlight.min.js"></script>
+		<script src="files/js/toc.js"></script>
+		<script>
+function ggggg(t){var e="index",i=window.location.href.split("?");if(1<i.length)for(var n=i[1].split("#")[0].split("&"),a=0;a<n.length;a++){var o=n[a].split("=");if(o[0]==t){e=o[1];break}}return e}function line_code(t){canvas=document.getElementById("line_num_canvas"),canvas.getContext&&(ctx=canvas.getContext("2d")),canvas.width=70,canvas.height=28,ctx.font="16px Arial",ctx.textAlign="right",ctx.fillStyle="#888888",ctx.fillText(t,65,21);new Image;return canvas.toDataURL("image/png")}function resize_dom(){tb_width=$("#content").width()+70,$("#toc-box").css("width",tb_width),t_height=$("#toc").height(),t_height>.8*$(window).height()-10?$("#toc").css("height",.8*$(window).height()-10):$("#toc").css("height","auto")}$(document).ready(function(){hljs.initHighlightingOnLoad(),marked.setOptions({highlight:function(t,e){return hljs.highlightAuto(t).value}});var e=new marked.Renderer;e.image=function(t,e,i){return'<div class="img-box"><img src="data'+t.slice(15)+'" alt="'+i+'" /></div>'},e.link=function(t,e,i){return new RegExp("^[\\u4e00-\\u9fa5a-zA-Z0-9\\-\\:]+$").test(t)?'<a href="index.html?name='+t+'" title="'+i+'">'+i+"</a>":"def"==e?'<a  data-toggle="tooltip" data-placement="top" title="'+t+'">['+i+"]</a>":'<a href="'+t+'" target="_blank title="'+i+'">'+i+"</a>"};var t="data",n=ggggg("name").split(":");for(i in n)t+="/"+n[i];fileurl=t+".md",$.ajax({url:fileurl,async:!0,dataType:"text",error:function(){$("#content").html('<h3>404</h3><p>Or <a href="'+window.location.href+'">Refresh</a></p>')},success:function(t){$("#content").html(function(){return marked(t,{renderer:e,gfm:!0,tables:!0,breaks:!1,pedantic:!1,sanitize:!1,smartLists:!0,smartypants:!1}).replace(/<p>\[TOC]<\/p>/i,'<div id="toc-box" class="no-print"><div class="menu"></div><div id="toc"></div></div>').replace(/<p><div/gi,"<div").replace(/<\/div><\/p>/gi,"</div>")}),$("pre code").each(function(){var t=$(this).html().split("\n"),e="";for(k in t)Number(k)!=t.length-1&&(e+='<div class="code-line"><div class="line-num" style="background:url('+line_code(Number(k)+1)+') top right no-repeat;"></div>'+t[k]+"</div>");$(this).html(e)}),$('[data-toggle="tooltip"]').tooltip(),pagetitle=$("#content").find(":header:first").text(),""!=pagetitle&&$("title").text(pagetitle+" - "+$("#header h1").text()),$("#toc").toc({selectors:"h1,h2,h3",container:"#content",anchorName:function(t,e,i){return i+t},headerText:function(t,e,i){return i.text()}}),$("#toc-box .menu").html('<span class="glyphicon glyphicon-list" aria-hidden="true"></span>'),resize_dom(),$(window).resize(function(){resize_dom()}),$("#toc-box .menu").click(function(){$("#toc").slideToggle()}),$("#toc a").click(function(){$("#toc").hide()})}})});
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<h1><a href="index.html">Pages</a></h1>
+		</div>
+		<div id="main" class="container print-col-wider">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="content">
+						Loading...
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			Power by <a href="#">Markdown</a>
+		</div>
+		<div style="display:none">
+			<canvas id="line_num_canvas"></canvas>
+		</div>
+		<script src="files/js/bootstrap.min.js"></script>
+	</body>
+</html>
